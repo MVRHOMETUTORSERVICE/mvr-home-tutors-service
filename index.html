@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MVR Home Tutors Service</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#172033}a{text-decoration:none;color:inherit}
+header{background:#fff;border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:20}.nav{max-width:1180px;margin:auto;padding:15px 20px;display:flex;align-items:center;justify-content:space-between}.brand{font-weight:800;font-size:34px;line-height:1.05;color:#2563eb}.brand span{color:#111827}nav{display:flex;gap:22px;align-items:center}nav a{font-weight:600;color:#374151}.btn{border:0;border-radius:9px;padding:12px 18px;font-weight:700;cursor:pointer}.primary{background:#2563eb;color:white}.secondary{background:#eaf1ff;color:#1d4ed8}
+.hero{background:linear-gradient(135deg,#eff6ff,#fff);padding:72px 20px}.hero-grid{max-width:1180px;margin:auto;display:grid;grid-template-columns:1.15fr .85fr;gap:45px;align-items:center}h1{font-size:48px;line-height:1.08;margin:12px 0 18px;color:#101828}.hero p{font-size:18px;color:#667085;max-width:650px}.tag{display:inline-block;padding:7px 12px;border-radius:20px;background:#dbeafe;color:#1d4ed8;font-weight:700;font-size:13px}.hero-card,.card{background:white;border:1px solid #e5e7eb;border-radius:16px;padding:26px;box-shadow:0 12px 35px #1018280d}
+.search{display:grid;gap:12px}.search input,.search select,.form input,.form select,.form textarea{width:100%;padding:13px;border:1px solid #d0d5dd;border-radius:8px;font-size:15px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+section{padding:65px 20px}.container{max-width:1180px;margin:auto}.title{text-align:center;margin-bottom:36px}.title h2{font-size:34px;margin:0 0 8px}.title p{color:#667085}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.card h3{margin:8px 0}.card p{color:#667085}.icon{font-size:30px}
+.how{background:#fff}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.step{padding:24px;border:1px solid #e5e7eb;border-radius:14px}.num{width:38px;height:38px;background:#2563eb;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
+.cta{background:#1d4ed8;color:white;text-align:center}.cta p{color:#dbeafe}.cta .btn{background:white;color:#1d4ed8}
+footer{background:#101828;color:#d0d5dd;text-align:center;padding:30px 20px}
+.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.show{display:flex}.modalbox{background:#fff;width:min(620px,100%);max-height:92vh;overflow:auto;border-radius:16px;padding:28px}.close{float:right;border:0;background:none;font-size:26px;cursor:pointer}.form{display:grid;gap:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.hint{font-size:13px;color:#667085}.locationbox{border:1px solid #dbe3ef;border-radius:12px;padding:16px;background:#f8fafc}.loc-actions{display:flex;gap:10px;flex-wrap:wrap}.map{height:150px;border-radius:10px;background:linear-gradient(135deg,#dbeafe,#ecfdf3);display:flex;align-items:center;justify-content:center;color:#475467;margin-top:12px}.check{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:#475467}.message{font-size:14px;color:#2563eb;min-height:20px}.toast{position:fixed;top:78px;right:20px;max-width:420px;padding:14px 18px;border-radius:12px;background:#fff;border:1px solid #d0d5dd;box-shadow:0 12px 30px #10182833;z-index:1000;display:none;font-weight:700}.toast.show{display:block}.toast.success{border-color:#86efac;color:#166534}.toast.error{border-color:#fca5a5;color:#991b1b}.toast.info{border-color:#93c5fd;color:#1d4ed8}
+@media(max-width:850px){.hero-grid,.cards,.steps{grid-template-columns:1fr}.row{grid-template-columns:1fr}h1{font-size:38px}nav a:not(.login){display:none}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<header><div class="nav">
+<div class="brand">MVR <span>Home Tutors Service</span></div>
+<nav><a href="#home">Home</a><a href="#services">Services</a><a href="#how">How It Works</a><a href="#contact">Contact</a><a class="btn secondary" href="#" onclick="openLogin('tutor');return false">Tutor Login</a><a class="btn secondary" href="#" onclick="openLogin('student');return false">Student/Parent Login</a><a class="btn primary" href="#" onclick="openLogin('admin');return false">Admin Login</a></nav>
+</div></header>
+
+<section class="hero" id="home"><div class="hero-grid">
+<div><span class="tag">Verified Tutor Connection</span><h1>Find the right home tutor near you.</h1><p>Connect students and parents with suitable tutors based on class, subject and preferred location. Share only the location details needed for the tuition service.</p>
+<div class="actions"><a class="btn primary" href="#" onclick="openModal('register');return false">Register</a><a class="btn secondary" href="#services">Explore Services</a></div></div>
+<div class="hero-card"><h2>Find a Tutor</h2><p class="hint">Search using your preferred area.</p><div class="search">
+<select><option>Select Class</option><option>Primary School</option><option>6th - 8th</option><option>9th - 10th</option><option>Intermediate</option><option>Degree / Engineering</option></select>
+<select><option>Select Subject</option><option>Mathematics</option><option>Science</option><option>English</option><option>Physics</option><option>Chemistry</option><option>Computer Science</option></select>
+<input id="searchLoc" placeholder="City / Area / Pincode">
+<button class="btn primary" onclick="search()">Search Tutors</button><div id="searchMsg" class="message"></div></div></div>
+</div></section>
+
+<section id="services"><div class="container"><div class="title"><h2>Our Services</h2><p>Everything needed to connect students and tutors.</p></div>
+<div class="cards"><div class="card"><div class="icon">👨‍🏫</div><h3>Find a Tutor</h3><p>Search by class, subject and preferred area.</p></div>
+<div class="card"><div class="icon">📍</div><h3>Location Based Matching</h3><p>Share an area, pincode or map location according to your privacy preference.</p></div>
+<div class="card"><div class="icon">🔔</div><h3>Notifications</h3><p>Get updates when suitable tutors apply to your requirement.</p></div></div></div></section>
+
+<section class="how" id="how"><div class="container"><div class="title"><h2>How It Works</h2><p>Simple, secure and transparent.</p></div>
+<div class="steps"><div class="step"><div class="num">1</div><h3>Register</h3><p>Create an account using your email.</p></div><div class="step"><div class="num">2</div><h3>Verify Email</h3><p>Enter the OTP sent to your email.</p></div><div class="step"><div class="num">3</div><h3>Post Requirement</h3><p>Add class, subject, budget and location.</p></div><div class="step"><div class="num">4</div><h3>Connect</h3><p>Review suitable tutor applications and connect.</p></div></div></div></section>
+
+<section><div class="container"><div class="title"><h2>Built for Students, Parents & Tutors</h2><p>Role-based accounts keep each user's information organized.</p></div>
+<div class="cards"><div class="card"><h3>Student / Parent</h3><p>Post tuition requirements, select preferred location sharing and review tutor applications.</p></div><div class="card"><h3>Tutor</h3><p>Create a professional profile, choose service areas and apply for suitable tuition requests.</p></div><div class="card"><h3>Admin</h3><p>Manage users, requirements, applications, verification and notifications.</p></div></div></div></section>
+
+<section class="cta" id="contact"><div class="container"><h2>Start with MVR Home Tutors Service</h2><p>Create your account and find suitable tuition opportunities.</p><button class="btn" onclick="openModal('register')">Create Account</button></div></section>
+<footer>© 2026 MVR Home Tutors Service · Privacy · Terms · Contact</footer>
+
+<div class="modal" id="modal">
+<div class="modalbox">
+<button class="close" onclick="closeModal()">×</button>
+<h2 id="modalTitle">Create Account</h2>
+
+<div id="registerPanel">
+<div class="form">
+<div class="row">
+<input id="name" placeholder="Full Name">
+<select id="role" onchange="toggleTutorFields()"><option value="student">Student / Parent</option><option value="tutor">Tutor</option></select>
+</div>
+<input id="email" type="email" placeholder="Email Address">
+<button id="sendOtpBtn" type="button" class="btn secondary" onclick="sendOtp();return false;">Send Email OTP</button>
+<input id="otp" placeholder="Enter 6-digit OTP" maxlength="6">
+<button type="button" class="btn secondary" onclick="verifyOtp()">Verify Email</button>
+
+<div class="row">
+<input id="pass" type="password" placeholder="Create Password">
+<input id="confirm" type="password" placeholder="Confirm Password">
+</div>
+
+<div id="tutorFields" style="display:none">
+<div class="locationbox">
+<h3>👨‍🏫 Tutor Professional Details</h3>
+<div class="form">
+<input id="qualification" placeholder="Highest Qualification (e.g. M.Tech, B.Tech)">
+<input id="experience" placeholder="Teaching Experience (Years)">
+<input id="subjects" placeholder="Subjects you can teach">
+<input id="classes" placeholder="Classes / Levels you can teach">
+<input id="serviceArea" placeholder="Preferred Teaching Area / City / Pincode">
+<label class="hint">Resume / CV (PDF, DOC, DOCX)</label>
+<input id="resume" type="file" accept=".pdf,.doc,.docx">
+<label class="hint">Identity Proof (Aadhaar / PAN / Passport / Driving Licence)</label>
+<input id="idProof" type="file" accept=".pdf,.jpg,.jpeg,.png">
+<label class="hint">Passport-size Photo</label>
+<input id="photo" type="file" accept=".jpg,.jpeg,.png">
+<p class="hint">For the final system, identity documents should be stored securely and visible only to authorized administrators.</p>
+</div>
+</div>
+</div>
+
+<div class="locationbox">
+<h3>📍 Location Details</h3>
+<p class="hint">Choose how much location information you want to share.</p>
+<select id="locType" onchange="locationChoice()">
+<option value="area">Area / City / Pincode only</option>
+<option value="address">Full address for approved tutor</option>
+<option value="map">Share map pin after approval</option>
+</select>
+<input id="area" placeholder="Area / City / Pincode">
+<div class="loc-actions">
+<button type="button" class="btn secondary" onclick="getLocation()">Use my current location</button>
+<button type="button" class="btn secondary" onclick="manualMap()">Add map location</button>
+</div>
+<div class="map" id="mapBox">Map location preview will appear here</div>
+<p class="hint" id="locStatus">Exact address will not be required for public tutor browsing.</p>
+</div>
+
+<label class="check"><input type="checkbox" id="consent"> I agree to the selected location and account details being used for tuition matching and service administration.</label>
+<label class="check"><input type="checkbox" id="docConsent"> I confirm that documents uploaded by me are genuine and belong to me.</label>
+<button type="button" class="btn primary" onclick="register()">Create Account</button>
+<div id="formMsg" class="message">Ready for email verification.</div>
+</div>
+</div>
+
+<div id="loginPanel" style="display:none">
+<div class="form">
+<div id="loginRoleLabel" class="hint"></div>
+<input id="loginEmail" type="email" placeholder="Email Address">
+<input id="loginPassword" type="password" placeholder="Password">
+<button class="btn primary" onclick="login()">Login</button>
+<a href="#" onclick="forgotPassword();return false" style="color:#2563eb;font-weight:600">Forgot Password?</a>
+<div id="loginMsg" class="message"></div>
+</div>
+</div>
+</div></div>
+<script>
+let currentLoginRole = '';
+let otpSent = false;
+let emailVerified = false;
+
+function openModal(type){
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('registerPanel').style.display='block';
+  document.getElementById('loginPanel').style.display='none';
+  document.getElementById('modalTitle').textContent='Create Account';
+  document.getElementById('role').value = type==='tutor' ? 'tutor' : 'student';
+  toggleTutorFields();
+}
+
+function openLogin(role){
+  currentLoginRole=role;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('registerPanel').style.display='none';
+  document.getElementById('loginPanel').style.display='block';
+  document.getElementById('modalTitle').textContent =
+    role==='tutor'?'Tutor Login':role==='admin'?'Admin Login':'Student / Parent Login';
+  document.getElementById('loginRoleLabel').textContent =
+    'Login portal: '+(role==='tutor'?'Tutor':role==='admin'?'Administrator':'Student / Parent');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+
+function toggleTutorFields(){
+  document.getElementById('tutorFields').style.display =
+    document.getElementById('role').value==='tutor'?'block':'none';
+}
+
+
+function notify(message,type='info'){
+  const t=document.getElementById('toast');
+  t.textContent=message;
+  t.className='toast show '+type;
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer=setTimeout(()=>{t.className='toast';},4500);
+}
+
+async function sendOtp(){
+  const email=document.getElementById('email').value.trim();
+  const msg=document.getElementById('formMsg');
+  if(!email){msg.textContent='Please enter your email address first.';notify('Please enter your email address first.','error');return}
+  if(typeof window.supabase === 'undefined'){
+    msg.textContent='Supabase connection did not load. Please reopen this final file in Chrome/Edge with internet enabled.';notify('Supabase connection did not load.','error');
+    return;
+  }
+  if(typeof supabaseClient === 'undefined'){
+    msg.textContent='Supabase connection is not ready. Please reopen the final file.';notify('Supabase connection is not ready.','error');
+    return;
+  }
+  msg.innerHTML='<strong>Sending OTP...</strong><br>Please wait.';notify('Sending OTP...','info');
+  try{
+    const {error}=await supabaseClient.auth.signInWithOtp({
+      email,
+      options:{shouldCreateUser:true}
+    });
+    if(error){
+      msg.innerHTML='<strong style="color:#b91c1c">✗ OTP NOT SENT</strong><br>'+error.message;notify('OTP not sent: '+error.message,'error');
+      return;
+    }
+    otpSent=true;
+    emailVerified=false;
+    msg.innerHTML='<strong style="color:#15803d">✓ OTP SENT</strong><br>Verification code sent to <b>'+email+'</b>. Please check your email.';notify('OTP sent successfully. Check your email.','success');
+  }catch(err){
+    msg.innerHTML='<strong style="color:#b91c1c">✗ OTP ERROR</strong><br>'+err.message;notify('OTP error: '+err.message,'error');
+  }
+}
+
+async function verifyOtp(){
+  const email=document.getElementById('email').value.trim();
+  const token=document.getElementById('otp').value.trim();
+  const msg=document.getElementById('formMsg');
+  if(!otpSent){msg.textContent='Please click Send Email OTP first.';return}
+  if(!email || !token){msg.textContent='Enter your email and the OTP.';return}
+  msg.textContent='Verifying email...';
+  const {data,error}=await supabaseClient.auth.verifyOtp({
+    email,
+    token,
+    type:'email'
+  });
+  if(error){
+    msg.textContent='OTP verification failed: '+error.message;notify('OTP verification failed: '+error.message,'error');
+    return;
+  }
+  emailVerified=true;
+  msg.textContent='Email verified successfully. Now complete your account details.';notify('Email verified successfully.','success');
+}
+
+function locationChoice(){
+  let v=document.getElementById('locType').value;
+  document.getElementById('locStatus').textContent =
+    v==='area'?'Only area/city/pincode can be used for initial matching.':
+    v==='address'?'Full address should be shared only with the approved tutor/authorized service flow.':
+    'Map pin can be shared after approval.';
+}
+
+function getLocation(){
+  if(!navigator.geolocation){
+    document.getElementById('locStatus').textContent='Location access is not supported by this browser.';
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      document.getElementById('mapBox').textContent =
+        'Current location captured. Coordinates will be stored only with consent.';
+      document.getElementById('mapBox').dataset.lat=p.coords.latitude;
+      document.getElementById('mapBox').dataset.lng=p.coords.longitude;
+      document.getElementById('locStatus').textContent='Current location captured.';
+    },
+    ()=>document.getElementById('locStatus').textContent =
+      'Location permission was not granted. You can enter area/pincode manually.'
+  );
+}
+
+function manualMap(){
+  document.getElementById('mapBox').textContent =
+    'Map picker can be connected later. For now, enter your area/city/pincode above.';
+}
+
+async function uploadFile(bucket, userId, file){
+  if(!file) return null;
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  const path=userId+'/'+Date.now()+'_'+safeName;
+  const {error}=await supabaseClient.storage.from(bucket).upload(path,file,{upsert:false});
+  if(error) throw error;
+  return path;
+}
+
+async function register(){
+  const name=document.getElementById('name').value.trim();
+  const p=document.getElementById('pass').value;
+  const c=document.getElementById('confirm').value;
+  const e=document.getElementById('email').value.trim();
+  const cons=document.getElementById('consent').checked;
+  const docCons=document.getElementById('docConsent').checked;
+  const role=document.getElementById('role').value;
+  const area=document.getElementById('area').value.trim();
+  const m=document.getElementById('formMsg');
+
+  if(!name){m.textContent='Please enter your full name.';notify('Please enter your full name.','error');return}
+  if(!e){m.textContent='Please enter your email address.';notify('Please enter your email address.','error');return}
+  if(!emailVerified){m.textContent='Please verify your email OTP first.';notify('Please verify your email OTP first.','error');return}
+  if(p.length<8){m.textContent='Password must contain at least 8 characters.';notify('Password must contain at least 8 characters.','error');return}
+  if(p!==c){m.textContent='Password and Confirm Password must match.';notify('Password and Confirm Password must match.','error');return}
+  if(!area){m.textContent='Please enter your area, city or pincode.';notify('Please enter your area, city or pincode.','error');return}
+  if(!cons){m.textContent='Please accept the location/account consent.';notify('Please accept the location/account consent.','error');return}
+  if(!docCons){m.textContent='Please confirm the uploaded information/documents are genuine.';notify('Please confirm the uploaded information/documents are genuine.','error');return}
+
+  if(role==='tutor'){
+    if(!document.getElementById('resume').files.length ||
+       !document.getElementById('idProof').files.length ||
+       !document.getElementById('photo').files.length){
+      m.textContent='Tutor registration requires Resume, Identity Proof and Passport-size Photo.';notify('Tutor registration requires Resume, Identity Proof and Passport-size Photo.','error');
+      return;
+    }
+  }
+
+  m.textContent='Creating your account...';notify('Creating your account...','info');
+
+  try{
+    const {data:{user},error:sessionError}=await supabaseClient.auth.getUser();
+    if(sessionError || !user){
+      m.textContent='Your verified session could not be found. Please verify the OTP again.';notify('Verified session not found. Please verify the OTP again.','error');
+      return;
+    }
+
+    const {error:pwError}=await supabaseClient.auth.updateUser({password:p});
+    if(pwError) throw pwError;
+
+    const {error:profileError}=await supabaseClient
+      .from('profiles')
+      .update({full_name:name, role:role, email_verified:true})
+      .eq('id',user.id);
+    if(profileError) throw profileError;
+
+    const locationText=area;
+    const mapBox=document.getElementById('mapBox');
+    const lat=mapBox.dataset.lat ? Number(mapBox.dataset.lat) : null;
+    const lng=mapBox.dataset.lng ? Number(mapBox.dataset.lng) : null;
+
+    if(role==='student'){
+      const {error}=await supabaseClient.from('student_parent_profiles').upsert({
+        user_id:user.id,
+        location:locationText
+      },{onConflict:'user_id'});
+      if(error) throw error;
+    }
+
+    if(role==='tutor'){
+      const resumePath=await uploadFile('tutor-resumes',user.id,document.getElementById('resume').files[0]);
+      const idPath=await uploadFile('identity-proofs',user.id,document.getElementById('idProof').files[0]);
+      const photoPath=await uploadFile('tutor-photos',user.id,document.getElementById('photo').files[0]);
+
+      const {error}=await supabaseClient.from('tutor_profiles').upsert({
+        user_id:user.id,
+        qualification:document.getElementById('qualification').value.trim(),
+        experience:document.getElementById('experience').value.trim(),
+        subjects:document.getElementById('subjects').value.trim(),
+        classes:document.getElementById('classes').value.trim(),
+        service_area:document.getElementById('serviceArea').value.trim() || locationText,
+        resume_path:resumePath,
+        identity_proof_path:idPath,
+        photo_path:photoPath,
+        latitude:lat,
+        longitude:lng
+      },{onConflict:'user_id'});
+      if(error) throw error;
+    }
+
+    const roleLabel = role==='tutor' ? 'Tutor' : 'Student / Parent';
+    const roleCode = role==='tutor' ? 'TUT' : 'STU';
+    const registrationNo = 'MVR-' + roleCode + '-' + user.id.replace(/-/g,'').slice(0,8).toUpperCase();
+    const successText = 'Registration successful! Registration No: ' + registrationNo + ' | Registered as: ' + roleLabel + '.';
+    m.textContent=successText;
+    notify(successText,'success');
+    setTimeout(()=>closeModal(),3500);
+  }catch(err){
+    m.textContent='Registration failed: '+err.message;notify('Registration failed: '+err.message,'error');
+  }
+}
+
+async function login(){
+  const e=document.getElementById('loginEmail').value.trim();
+  const p=document.getElementById('loginPassword').value;
+  const m=document.getElementById('loginMsg');
+  if(!e||!p){m.textContent='Please enter email and password.';return}
+  m.textContent='Signing in...';
+
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email:e,password:p});
+  if(error){m.textContent='Login failed: '+error.message;notify('Login failed: '+error.message,'error');return}
+
+  const {data:profile,error:profileError}=await supabaseClient
+    .from('profiles').select('role').eq('id',data.user.id).single();
+
+  if(profileError){m.textContent='Logged in, but profile could not be loaded.';notify('Logged in, but profile could not be loaded.','error');return}
+
+  if(currentLoginRole==='admin' && profile.role!=='admin'){
+    await supabaseClient.auth.signOut();
+    m.textContent='This account is not an admin account.';notify('This account is not an admin account.','error');
+    return;
+  }
+  if(currentLoginRole==='tutor' && profile.role!=='tutor'){
+    await supabaseClient.auth.signOut();
+    m.textContent='This account is not a tutor account.';notify('This account is not a tutor account.','error');
+    return;
+  }
+  if(currentLoginRole==='student' && profile.role!=='student'){
+    await supabaseClient.auth.signOut();
+    m.textContent='This account is not a Student / Parent account.';notify('This account is not a Student / Parent account.','error');
+    return;
+  }
+
+  m.textContent='Login successful.';notify('Login successful.','success');
+}
+
+async function forgotPassword(){
+  const email=document.getElementById('loginEmail').value.trim();
+  const m=document.getElementById('loginMsg');
+  if(!email){m.textContent='Enter your email address first.';notify('Enter your email address first.','error');return}
+  const {error}=await supabaseClient.auth.resetPasswordForEmail(email,{
+    redirectTo:window.location.href
+  });
+  m.textContent=error ? 'Password reset failed: '+error.message :
+    'Password reset email sent. Check your email.';
+}
+
+function search(){
+  let x=document.getElementById('searchLoc').value.trim();
+  document.getElementById('searchMsg').textContent =
+    x?'Searching suitable tutors near '+x+'...':'Please enter an area, city or pincode.';
+}
+</script>
+<script>
+const SUPABASE_URL = "https://jprvhbyzfnythuiynlum.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Vlcp99t3lTwYSlDoVUo38Q_wdeOU3MW";
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+</script>
+</body></html>
