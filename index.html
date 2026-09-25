@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MVR Home Tutors Service</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+header{background:#123b72;color:#fff;text-align:center;padding:28px 15px}
+header h1{margin:0;font-size:38px} header p{margin:8px 0}
+nav{background:#fff;padding:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;box-shadow:0 2px 8px #0001}
+button{border:0;border-radius:8px;padding:12px 18px;background:#1769aa;color:#fff;cursor:pointer}
+main{max-width:1000px;margin:25px auto;padding:0 15px}
+.panel{display:none;background:#fff;padding:25px;border-radius:14px;box-shadow:0 3px 14px #0001}
+.panel.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;margin-top:20px}
+.card{padding:20px;border-radius:12px;background:#f8fafc}
+label{display:block;font-weight:bold;margin-top:14px}
+input,select,textarea{width:100%;padding:11px;margin-top:6px;border:1px solid #ccd5e2;border-radius:7px;box-sizing:border-box}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.notice{display:none;padding:13px;margin:12px 0;border-radius:8px;white-space:pre-line}
+.success{background:#e7f7ed;color:#176b3a}.error{background:#fdeaea;color:#a32626}.info{background:#eaf3ff;color:#174b85}
+#top{display:none;position:fixed;top:10px;left:10px;right:10px;z-index:20;padding:14px;border-radius:8px;text-align:center;font-weight:bold}
+footer{text-align:center;padding:30px;color:#667085}
+@media(max-width:650px){header h1{font-size:29px}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="top"></div>
+<header><h1>MVR HOME TUTORS</h1><p>Professional Home Tuition Service</p></header>
+
+<nav>
+<button onclick="show('home')">Home</button>
+<button onclick="show('register')">Registration</button>
+<button onclick="show('tutorLogin')">Tutor Login</button>
+<button onclick="show('studentLogin')">Student / Parent Login</button>
+<button onclick="show('adminLogin')">Admin Login</button>
+</nav>
+
+<main>
+<section id="home" class="panel active">
+<h2>Welcome to MVR Home Tutors Service</h2>
+<p>Online platform for connecting students, parents and tutors.</p>
+<div class="cards">
+<div class="card"><h3>Tutors</h3><p>Register and submit professional details for verification.</p></div>
+<div class="card"><h3>Students / Parents</h3><p>Register and later create tuition requirements.</p></div>
+<div class="card"><h3>Secure Documents</h3><p>Resume and identity documents should remain private and admin-only.</p></div>
+</div>
+<br><button onclick="show('register')">Create Account</button>
+</section>
+
+<section id="register" class="panel">
+<h2>Create Account</h2>
+<div id="regNotice" class="notice"></div>
+<label>Register As</label>
+<select id="role" onchange="toggleTutor()">
+<option value="student_parent">Student / Parent</option>
+<option value="tutor">Tutor</option>
+</select>
+<label>Full Name</label><input id="name" placeholder="Enter full name">
+<label>Email Address</label><input id="email" type="email" placeholder="Enter email address">
+<div class="row">
+<div><label>Password</label><input id="pass" type="password"></div>
+<div><label>Confirm Password</label><input id="confirm" type="password"></div>
+</div>
+
+<div id="tutorFields" style="display:none">
+<h3>Tutor Professional Details</h3>
+<div class="row">
+<div><label>Qualification</label><input id="qualification"></div>
+<div><label>Experience</label><input id="experience"></div>
+</div>
+<label>Subjects</label><input id="subjects">
+<label>Classes</label><input id="classes">
+<label>Service Area</label><input id="area" placeholder="Area / City / Pincode">
+<label>Resume / CV</label><input type="file" id="resume" accept=".pdf,.doc,.docx">
+<label>Identity Proof</label><input type="file" id="identity" accept=".pdf,.jpg,.jpeg,.png">
+<label>Passport Size Photo</label><input type="file" id="photo" accept=".jpg,.jpeg,.png">
+</div>
+
+<label><input id="terms" type="checkbox" style="width:auto"> I agree to the registration terms and privacy policy.</label>
+<br><button onclick="register()">Register</button>
+</section>
+
+<section id="tutorLogin" class="panel">
+<h2>Tutor Login</h2><div id="tutorNotice" class="notice"></div>
+<label>Email</label><input id="tEmail" type="email">
+<label>Password</label><input id="tPass" type="password"><br><br>
+<button onclick="login('tutor')">Login</button>
+</section>
+
+<section id="studentLogin" class="panel">
+<h2>Student / Parent Login</h2><div id="studentNotice" class="notice"></div>
+<label>Email</label><input id="sEmail" type="email">
+<label>Password</label><input id="sPass" type="password"><br><br>
+<button onclick="login('student_parent')">Login</button>
+</section>
+
+<section id="adminLogin" class="panel">
+<h2>Admin Login</h2><div id="adminNotice" class="notice"></div>
+<label>Email</label><input id="aEmail" type="email">
+<label>Password</label><input id="aPass" type="password"><br><br>
+<button onclick="login('admin')">Login</button>
+<p>Admin credentials must be handled securely in the backend and must never be placed in this HTML file.</p>
+</section>
+
+<section id="dashboard" class="panel">
+<h2 id="dashTitle">Dashboard</h2><div id="dash"></div><br>
+<button onclick="show('home')">Logout</button>
+</section>
+</main>
+
+<footer>MVR Home Tutors Service</footer>
+
+<script>
+const SUPABASE_URL="https://jprvhbyzfnythuiynlum.supabase.co";
+
+function show(id){
+ document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ window.scrollTo(0,0);
+}
+function topMsg(msg,type){
+ const x=document.getElementById("top");
+ x.textContent=msg;x.style.display="block";
+ x.style.background=type==="error"?"#fdeaea":"#e7f7ed";
+ x.style.color=type==="error"?"#a32626":"#176b3a";
+ setTimeout(()=>x.style.display="none",5000);
+}
+function note(id,msg,type){
+ const x=document.getElementById(id);x.className="notice "+type;x.textContent=msg;x.style.display="block";
+}
+function toggleTutor(){
+ document.getElementById("tutorFields").style.display=
+ document.getElementById("role").value==="tutor"?"block":"none";
+}
+function regNo(role){
+ const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let s="";
+ for(let i=0;i<8;i++)s+=chars[Math.floor(Math.random()*chars.length)];
+ return role==="tutor"?"MVR-TUT-"+s:"MVR-STU-"+s;
+}
+function register(){
+ const role=document.getElementById("role").value,n=document.getElementById("name").value.trim(),
+ e=document.getElementById("email").value.trim(),p=document.getElementById("pass").value,
+ c=document.getElementById("confirm").value;
+ if(!n||!e||!p||!c){topMsg("Please fill all required fields.","error");return}
+ if(p.length<6){topMsg("Password must be at least 6 characters.","error");return}
+ if(p!==c){topMsg("Password and confirm password do not match.","error");return}
+ if(!document.getElementById("terms").checked){topMsg("Please accept the terms.","error");return}
+ const number=regNo(role),roleName=role==="tutor"?"Tutor":"Student / Parent";
+ localStorage.setItem("mvrRegistration",JSON.stringify({name:n,email:e,role,number}));
+ note("regNotice","Registration Successful ✓\nRegistration Number: "+number+
+ "\nRegistered as: "+roleName+"\n\nNext step: login and complete your profile.","success");
+ topMsg("Registration successful: "+number,"success");
+ setTimeout(()=>{document.getElementById(role==="tutor"?"tEmail":"sEmail").value=e;show(role==="tutor"?"tutorLogin":"studentLogin")},1200);
+}
+function login(role){
+ const e=document.getElementById(role==="tutor"?"tEmail":role==="student_parent"?"sEmail":"aEmail").value.trim();
+ const p=document.getElementById(role==="tutor"?"tPass":role==="student_parent"?"sPass":"aPass").value;
+ const nid=role==="tutor"?"tutorNotice":role==="student_parent"?"studentNotice":"adminNotice";
+ if(!e||!p){note(nid,"Email and password are required.","error");topMsg("Enter email and password.","error");return}
+ const r=JSON.parse(localStorage.getItem("mvrRegistration")||"null");
+ if(role!=="admin" && r && r.email.toLowerCase()===e.toLowerCase() && r.role===role){
+  document.getElementById("dashTitle").textContent=role==="tutor"?"Tutor Dashboard":"Student / Parent Dashboard";
+  document.getElementById("dash").innerHTML="<div class='card'><h3>Welcome, "+r.name+"</h3><p>Registration Number: <b>"+r.number+"</b></p><p>Email: "+e+"</p><p>Your profile completion and real backend services will be connected to Supabase in the next step.</p></div>";
+  show("dashboard");return;
+ }
+ note(nid,"Login form is ready. Real Supabase Auth connection is the next backend step.","info");
+ topMsg("Backend login is not connected in this fresh HTML yet.","error");
+}
+</script>
+</body>
+</html>
