@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MVR Home Tutors Service</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f8fc;color:#172033}
+header{background:linear-gradient(135deg,#092f57,#1769aa);color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 4px 18px #0002}
+.nav{max-width:1180px;margin:auto;padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{font-size:22px;font-weight:900}.links{display:flex;gap:17px;align-items:center}.links a{color:#fff;text-decoration:none;font-size:13px;font-weight:700}
+main{max-width:1180px;margin:auto;padding:25px 16px 55px}.screen{display:none}.screen.active{display:block}
+.hero{background:linear-gradient(135deg,#0b315a,#1769aa);color:#fff;border-radius:24px;padding:60px 25px;text-align:center;box-shadow:0 16px 45px #123b6828}
+.company{font-size:clamp(32px,6vw,58px);font-weight:900}.tagline{font-size:20px;font-weight:700;margin:10px 0 15px}.hero p{max-width:820px;margin:auto;line-height:1.75;color:#e9f3fb}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+button{border:0;border-radius:9px;padding:12px 18px;background:#1769aa;color:#fff;font-weight:800;cursor:pointer}button:hover{opacity:.9}.hero button{background:#fff;color:#123b68}.outline{background:transparent!important;color:#fff!important;border:1px solid #fff!important}
+.section{margin-top:22px;background:#fff;border:1px solid #e1e8f0;border-radius:18px;padding:30px;box-shadow:0 7px 25px #1720330b}
+.section h2{text-align:center;color:#123b68;margin:0 0 8px}.sub{text-align:center;color:#667085;line-height:1.6;margin:0 auto 24px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{border:1px solid #e1e8f0;border-radius:14px;padding:20px}.card h3{margin:0 0 8px;color:#173b67}.card p{margin:0;color:#667085;line-height:1.55;font-size:14px}
+.form{max-width:850px;margin:auto;background:#fff;border:1px solid #e1e8f0;border-radius:18px;padding:30px;box-shadow:0 8px 30px #17203310}.form h2{text-align:center;color:#123b68;margin:0 0 7px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}.field label{display:block;font-size:13px;font-weight:800;color:#344054;margin-bottom:6px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;font-size:14px}textarea{min-height:90px}
+.password{position:relative}.password input{padding-right:62px}.show{position:absolute;right:5px;top:5px;padding:7px 9px;background:#edf2f7;color:#173b67;font-size:11px}
+.msg{padding:11px;border-radius:9px;margin:12px 0;font-size:14px;line-height:1.5}.info{background:#edf5ff;color:#174d91}.ok{background:#ecfaf0;color:#166534}.err{background:#fff0f0;color:#a11d1d}
+.back{background:#edf1f5;color:#173b67}.success{border:2px solid #32a563;background:#f4fff8;text-align:center}.reg{font-size:28px;color:#1769aa;font-weight:900;margin:8px 0}
+.portal{display:grid;grid-template-columns:220px 1fr;gap:18px}.side{background:#123b68;color:#fff;border-radius:16px;padding:15px;height:max-content}.side button{width:100%;text-align:left;background:transparent;margin:3px 0}.side button:hover{background:#ffffff18}.dash{background:#fff;border:1px solid #e1e8f0;border-radius:16px;padding:25px;min-height:450px}
+.tab{display:none}.tab.active{display:block}.tableWrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:10px;border-bottom:1px solid #e5e7eb;text-align:left;vertical-align:top}.table th{background:#f6f8fb;color:#173b67}
+.item{border:1px solid #e2e8f0;border-radius:12px;padding:15px;margin:10px 0}.item h4{margin:0 0 6px;color:#173b67}.muted{color:#667085;font-size:13px}.badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#edf5ff;color:#174d91;font-size:11px;font-weight:800}
+.faq{border-bottom:1px solid #e3e8ef;padding:15px 0}.faq b{color:#173b67}.contact{text-align:center}
+footer{background:#102f56;color:#dce9f5;text-align:center;padding:25px;font-size:13px}
+.hidden{display:none!important}
+@media(max-width:800px){.cards,.grid{grid-template-columns:1fr}.portal{grid-template-columns:1fr}.links a{display:none}.brand{font-size:18px}.hero{padding:43px 18px}}
+</style>
+</head>
+<body>
+<header><div class="nav">
+<div class="brand">MVR Home Tutors Service</div>
+<div class="links"><a href="#home" onclick="home()">Home</a><a href="#about" onclick="homeTo('about')">About</a><a href="#faqs" onclick="homeTo('faqs')">FAQs</a><a href="#contact" onclick="homeTo('contact')">Contact</a><button onclick="openScreen('login')">Login</button></div>
+</div></header>
+
+<main>
+<!-- HOME -->
+<section id="home" class="screen active">
+<div class="hero">
+<div class="company">MVR HOME TUTORS SERVICE</div>
+<div class="tagline">“Connecting the right tutor with the right learner.”</div>
+<p>A structured platform for Students, Parents and Tutors. Students and parents can create tuition requirements, tutors can build professional profiles and apply for suitable opportunities, and administrators can manage the service securely.</p>
+<div class="actions"><button onclick="openScreen('register')">Register</button><button class="outline" onclick="openScreen('login')">User Login</button><button class="outline" onclick="openScreen('adminLogin')">Admin Login</button></div>
+</div>
+
+<div id="about" class="section"><h2>What do we do?</h2><p class="sub">MVR Home Tutors Service organizes the complete tuition connection workflow in one place.</p>
+<div class="cards">
+<div class="card"><h3>👨‍🏫 Tutors</h3><p>Create a professional profile, add qualification, experience, subjects, classes and service areas, submit documents and apply for suitable tuition requirements.</p></div>
+<div class="card"><h3>👨‍👩‍👧 Students / Parents</h3><p>Create a profile, post tuition requirements with subject, class, budget, timing and location preferences, and review tutor applications.</p></div>
+<div class="card"><h3>🛡️ Administration</h3><p>Authorized administrators can review tutor information and documents and manage requirements, applications, notifications and reviews according to database security rules.</p></div>
+</div></div>
+
+<div class="section"><h2>How It Works</h2><p class="sub">Register → Verify → Complete Profile → Post / Apply → Connect.</p>
+<div class="cards"><div class="card"><h3>1. Register & Verify</h3><p>Create one account using your email and verify it using OTP.</p></div><div class="card"><h3>2. Complete Profile</h3><p>Enter role-specific information after login.</p></div><div class="card"><h3>3. Tuition Workflow</h3><p>Students/parents post requirements and tutors apply to suitable requirements.</p></div></div></div>
+
+<div id="faqs" class="section"><h2>Frequently Asked Questions</h2>
+<div class="faq"><b>Who can register?</b><p>Students/Parents and Tutors can register. Admin login is separate.</p></div>
+<div class="faq"><b>How does OTP verification work?</b><p>Supabase Authentication sends the verification OTP to the registered email.</p></div>
+<div class="faq"><b>Can the same email create another account?</b><p>The system is designed for one Supabase Auth account per email. A duplicate registration is directed to Login.</p></div>
+<div class="faq"><b>What can a tutor add?</b><p>Qualification, experience, subjects, classes taught, teaching mode, service areas, bio and documents.</p></div>
+<div class="faq"><b>What can a Student/Parent do?</b><p>Create a profile, post tuition requirements and view/manage tutor applications.</p></div>
+<div class="faq"><b>Are sensitive tutor documents public?</b><p>No. Resume and identity documents are intended for private storage and authorized verification workflows.</p></div>
+</div>
+
+<div id="contact" class="section contact"><h2>Contact MVR Home Tutors Service</h2><p class="sub">For registration, tutoring requirements and platform support.</p><p><b>Company:</b> MVR Home Tutors Service</p><p><b>Email:</b> Add your official email before publishing</p><p><b>Phone:</b> Add your official contact number before publishing</p></div>
+</section>
+
+<!-- REGISTER -->
+<section id="register" class="screen"><div class="form"><h2>Create Your Account</h2><p class="sub">One account per email. Select Student / Parent or Tutor.</p><div id="regMsg"></div>
+<form id="regForm"><div class="grid">
+<div class="field full"><label>Full Name</label><input id="rName" required></div>
+<div class="field full"><label>Email Address</label><input id="rEmail" type="email" required></div>
+<div class="field"><label>Password</label><div class="password"><input id="rPass" type="password" minlength="6" required><button type="button" class="show" onclick="toggle('rPass',this)">Show</button></div></div>
+<div class="field"><label>Confirm Password</label><div class="password"><input id="rConfirm" type="password" minlength="6" required><button type="button" class="show" onclick="toggle('rConfirm',this)">Show</button></div></div>
+<div class="field full"><label>Register As</label><select id="rRole"><option value="student_parent">Student / Parent</option><option value="tutor">Tutor</option></select></div>
+</div><div class="actions"><button type="submit">Register & Send OTP</button><button type="button" class="back" onclick="home()">Back</button></div></form></div></section>
+
+<!-- OTP -->
+<section id="otp" class="screen"><div class="form"><h2>Verify Email</h2><p class="sub" id="otpText"></p><div id="otpMsg" class="msg info">Enter the 6-digit OTP.</div><input id="otpCode" maxlength="6" inputmode="numeric" placeholder="000000" style="max-width:280px;display:block;margin:auto;text-align:center;letter-spacing:8px;font-size:21px"><div class="actions"><button onclick="verifyOTP()">Verify OTP</button><button class="back" onclick="resendOTP()">Resend OTP</button></div></div></section>
+
+<!-- SUCCESS -->
+<section id="success" class="screen"><div class="form success"><h2>✓ Registration Successful</h2><p>Your email has been verified.</p><div id="successDetails" class="profile"></div><div class="actions"><button onclick="loadUserDashboard()">Continue</button></div></div></section>
+
+<!-- USER LOGIN -->
+<section id="login" class="screen"><div class="form"><h2>User Login</h2><p class="sub">Select the account type you registered with.</p><div id="loginMsg"></div>
+<div class="field"><label>Login As</label><select id="lRole"><option value="student_parent">Student / Parent</option><option value="tutor">Tutor</option></select></div>
+<div class="field" style="margin-top:14px"><label>Email</label><input id="lEmail" type="email"></div>
+<div class="field" style="margin-top:14px"><label>Password</label><div class="password"><input id="lPass" type="password"><button type="button" class="show" onclick="toggle('lPass',this)">Show</button></div></div>
+<div class="actions"><button onclick="userLogin()">Login</button><button class="back" onclick="home()">Back</button></div></div></section>
+
+<!-- ADMIN LOGIN -->
+<section id="adminLogin" class="screen"><div class="form"><h2>Admin Login</h2><p class="sub">Separate administrator portal. Database role must be <b>admin</b>.</p><div id="adminMsg"></div>
+<div class="field"><label>Admin Email</label><input id="aEmail" type="email"></div><div class="field" style="margin-top:14px"><label>Password</label><div class="password"><input id="aPass" type="password"><button type="button" class="show" onclick="toggle('aPass',this)">Show</button></div></div>
+<div class="actions"><button onclick="adminLogin()">Admin Login</button><button class="back" onclick="home()">Back</button></div></div></section>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="screen"><div class="portal">
+<aside class="side">
+<button onclick="tab('overview')">🏠 Overview</button><button onclick="tab('profile')">👤 My Profile</button><button id="reqNav" onclick="tab('requirements')">📋 Tuition Requirements</button><button id="appNav" onclick="tab('applications')">📨 Applications</button><button onclick="tab('notifications')">🔔 Notifications</button><button id="reviewNav" onclick="tab('reviews')">⭐ Reviews</button><button id="docNav" onclick="tab('documents')">📄 Documents</button><button id="adminNav" class="hidden" onclick="tab('admin')">🛡️ Admin Panel</button><button onclick="logout()">↪ Logout</button>
+</aside>
+<div class="dash">
+<div id="overview" class="tab active"><h2>Welcome to MVR Home Tutors Service</h2><div id="dashProfile" class="profile"></div><p class="muted">Use the menu to manage your role-specific activities.</p></div>
+
+<div id="profile" class="tab"><h2>My Profile</h2><div id="profileForm"></div></div>
+
+<div id="requirements" class="tab"><h2>Tuition Requirements</h2><div id="requirementForm"></div><div id="requirementsList"></div></div>
+
+<div id="applications" class="tab"><h2>Tutor Applications</h2><div id="applicationsList"></div></div>
+
+<div id="notifications" class="tab"><h2>Notifications</h2><div id="notificationsList"></div></div>
+
+<div id="reviews" class="tab"><h2>Reviews</h2><div id="reviewsList"></div></div>
+
+<div id="documents" class="tab"><h2>Tutor Documents</h2><div id="documentsForm"></div></div>
+
+<div id="admin" class="tab"><h2>Admin Panel</h2><div id="adminContent"></div></div>
+</div></div></section>
+</main>
+<footer>MVR Home Tutors Service • “Connecting the right tutor with the right learner.”</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://jprvhbyzfnythuiynlum.supabase.co";
+const SUPABASE_PUBLIC_KEY="sb_publishable_Vlcp99t3lTwYSlDoVUo38Q_wdeOU3MW";
+const db=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLIC_KEY);
+let pendingEmail="",pendingRole="",currentUser=null,currentProfile=null;
+
+function openScreen(id){document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");scrollTo(0,0)}
+function home(){openScreen("home")}
+function homeTo(id){home();setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:"smooth"}),50)}
+function toggle(id,b){const x=document.getElementById(id);x.type=x.type==="password"?"text":"password";b.textContent=x.type==="password"?"Show":"Hide"}
+function msg(id,t,c="info"){document.getElementById(id).innerHTML='<div class="msg '+c+'">'+esc(t)+'</div>'}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+function arr(v){return v.split(",").map(x=>x.trim()).filter(Boolean)}
+function roleText(r){return r==="tutor"?"Tutor":r==="student_parent"?"Student / Parent":r==="admin"?"Admin":r}
+
+document.getElementById("regForm").addEventListener("submit",async e=>{
+e.preventDefault();
+if(SUPABASE_PUBLIC_KEY.includes("PASTE_")){msg("regMsg","Add your Supabase Publishable/anon key to this HTML before testing.","err");return}
+const name=rName.value.trim(),email=rEmail.value.trim().toLowerCase(),pw=rPass.value,cf=rConfirm.value,role=rRole.value;
+if(pw!==cf){msg("regMsg","Password and Confirm Password do not match.","err");return}
+pendingEmail=email;pendingRole=role;
+const r=await db.auth.signUp({email,password:pw,options:{data:{full_name:name,role}}});
+if(r.error){msg("regMsg",r.error.message,"err");return}
+if(r.data.user?.identities?.length===0){msg("regMsg","This email is already registered. Please Login instead.","err");return}
+otpText.textContent="A 6-digit OTP was sent to "+email+".";
+msg("otpMsg","OTP sent successfully.","info");openScreen("otp");
+});
+
+async function verifyOTP(){
+const token=otpCode.value.trim();if(!/^[0-9]{6}$/.test(token)){msg("otpMsg","Enter the 6-digit OTP.","err");return}
+const r=await db.auth.verifyOtp({email:pendingEmail,token,type:"signup"});
+if(r.error){msg("otpMsg",r.error.message,"err");return}
+currentUser=r.data.user;
+let p=null;
+for(let i=0;i<7&&!p;i++){const q=await db.from("profiles").select("*").eq("id",currentUser.id).maybeSingle();p=q.data;if(!p)await new Promise(x=>setTimeout(x,600))}
+if(!p){msg("otpMsg","OTP verified, but the profiles record was not created. Check MVR User Registration Trigger.","err");return}
+await db.from("profiles").update({email_verified:true}).eq("id",currentUser.id);
+const reg=p.registration_number||"Not available";
+successDetails.innerHTML="<b>Registration Number</b><div class='reg'>"+esc(reg)+"</div><b>Name:</b> "+esc(p.full_name)+"<br><b>Email:</b> "+esc(p.email)+"<br><b>Registered as:</b> "+esc(roleText(p.role));
+openScreen("success");
+}
+async function resendOTP(){const r=await db.auth.resend({type:"signup",email:pendingEmail});msg("otpMsg",r.error?r.error.message:"New OTP sent. Your permanent registration number is not regenerated.","info")}
+
+async function userLogin(){
+if(SUPABASE_PUBLIC_KEY.includes("PASTE_")){msg("loginMsg","Add your Supabase Publishable/anon key first.","err");return}
+const r=await db.auth.signInWithPassword({email:lEmail.value.trim().toLowerCase(),password:lPass.value});
+if(r.error){msg("loginMsg",r.error.message,"err");return}
+currentUser=r.data.user;const p=await getProfile();
+if(!p){await db.auth.signOut();return}
+if(p.role!==lRole.value){await db.auth.signOut();msg("loginMsg","This account is registered as "+roleText(p.role)+". Please select the correct Login As option.","err");return}
+await loadUserDashboard();
+}
+async function adminLogin(){
+if(SUPABASE_PUBLIC_KEY.includes("PASTE_")){msg("adminMsg","Add your Supabase Publishable/anon key first.","err");return}
+const r=await db.auth.signInWithPassword({email:aEmail.value.trim().toLowerCase(),password:aPass.value});
+if(r.error){msg("adminMsg",r.error.message,"err");return}
+currentUser=r.data.user;const p=await getProfile();
+if(!p||p.role!=="admin"){await db.auth.signOut();msg("adminMsg","Admin access denied. This account does not have the admin role.","err");return}
+await loadUserDashboard();
+}
+async function getProfile(){const r=await db.from("profiles").select("*").eq("id",currentUser.id).single();if(r.error){console.error(r.error);return null}currentProfile=r.data;return r.data}
+async function loadUserDashboard(){
+if(!currentProfile)await getProfile();
+dashProfile.innerHTML="<b>Registration Number:</b> "+esc(currentProfile.registration_number||"Not available")+"<br><b>Name:</b> "+esc(currentProfile.full_name)+"<br><b>Email:</b> "+esc(currentProfile.email)+"<br><b>Role:</b> "+esc(roleText(currentProfile.role));
+adminNav.classList.toggle("hidden",currentProfile.role!=="admin");
+reqNav.classList.toggle("hidden",currentProfile.role==="admin");
+appNav.classList.toggle("hidden",currentProfile.role==="admin");
+reviewNav.classList.toggle("hidden",currentProfile.role==="admin");
+docNav.classList.toggle("hidden",currentProfile.role!=="tutor");
+await loadProfileTab();await loadRequirements();await loadApplications();await loadNotifications();await loadReviews();await loadDocuments();if(currentProfile.role==="admin")await loadAdmin();openScreen("dashboard");
+}
+function tab(id){document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");if(id==="requirements")loadRequirements();if(id==="applications")loadApplications();if(id==="notifications")loadNotifications();if(id==="reviews")loadReviews();if(id==="documents")loadDocuments();if(id==="admin")loadAdmin()}
+async function loadProfileTab(){
+if(currentProfile.role==="tutor"){
+const r=await db.from("tutor_profiles").select("*").eq("user_id",currentUser.id).maybeSingle();const p=r.data||{};
+profileForm.innerHTML=`<div class="grid"><div class="field"><label>Qualification</label><input id="pQual" value="${esc(p.qualification||"")}"></div><div class="field"><label>Experience Years</label><input id="pExp" type="number" step="0.01" value="${p.experience_years??""}"></div><div class="field"><label>Subjects</label><input id="pSub" value="${esc((p.subjects||[]).join(", "))}"></div><div class="field"><label>Classes Taught</label><input id="pClass" value="${esc((p.classes_taught||[]).join(", "))}"></div><div class="field"><label>Teaching Mode</label><select id="pMode"><option value="home">Home</option><option value="online">Online</option><option value="both">Both</option></select></div><div class="field"><label>Service Areas</label><input id="pAreas" value="${esc((p.service_areas||[]).join(", "))}"></div><div class="field full"><label>Bio</label><textarea id="pBio">${esc(p.bio||"")}</textarea></div></div><button onclick="saveTutorProfile()">Save Tutor Profile</button>`;
+pMode.value=p.teaching_mode||"home";
+}else if(currentProfile.role==="student_parent"){
+const r=await db.from("student_parent_profiles").select("*").eq("user_id",currentUser.id).maybeSingle();const p=r.data||{};
+profileForm.innerHTML=`<div class="grid"><div class="field"><label>Student Name</label><input id="sName" value="${esc(p.student_name||"")}"></div><div class="field"><label>Student Class</label><input id="sClass" value="${esc(p.student_class||"")}"></div><div class="field"><label>Relationship to Student</label><input id="sRel" value="${esc(p.relationship_to_student||"")}"></div><div class="field"><label>Preferred Subjects</label><input id="sSub" value="${esc((p.preferred_subjects||[]).join(", "))}"></div><div class="field full"><label>Preferred Location</label><input id="sLoc" value="${esc(p.preferred_location||"")}"></div></div><button onclick="saveStudentProfile()">Save Student / Parent Profile</button>`;
+}else{profileForm.innerHTML="<p class='muted'>Admin profile is managed through the administrator account and database security policies.</p>"}
+}
+async function saveTutorProfile(){
+const payload={user_id:currentUser.id,qualification:pQual.value||null,experience_years:pExp.value?Number(pExp.value):null,subjects:arr(pSub.value),classes_taught:arr(pClass.value),teaching_mode:pMode.value,service_areas:arr(pAreas.value),bio:pBio.value||null};
+const r=await db.from("tutor_profiles").upsert(payload,{onConflict:"user_id"});msg("dashMsg",r.error?r.error.message:"Tutor profile saved successfully.","ok");await loadProfileTab();
+}
+async function saveStudentProfile(){
+const payload={user_id:currentUser.id,student_name:sName.value||null,student_class:sClass.value||null,relationship_to_student:sRel.value||null,preferred_subjects:arr(sSub.value),preferred_location:sLoc.value||null};
+const r=await db.from("student_parent_profiles").upsert(payload,{onConflict:"user_id"});msg("dashMsg",r.error?r.error.message:"Student / Parent profile saved successfully.","ok");await loadProfileTab();
+}
+async function loadRequirements(){
+if(currentProfile?.role==="student_parent")requirementForm.innerHTML=`<div class="grid"><div class="field"><label>Student Name</label><input id="qStudent"></div><div class="field"><label>Class Level *</label><input id="qClass" required></div><div class="field"><label>Subjects *</label><input id="qSubjects" placeholder="Maths, Science"></div><div class="field"><label>Teaching Mode</label><select id="qMode"><option value="home">Home</option><option value="online">Online</option><option value="both">Both</option></select></div><div class="field"><label>City</label><input id="qCity"></div><div class="field"><label>Area</label><input id="qArea"></div><div class="field"><label>Pincode</label><input id="qPin"></div><div class="field"><label>Budget Minimum</label><input id="qMin" type="number" step="0.01"></div><div class="field"><label>Budget Maximum</label><input id="qMax" type="number" step="0.01"></div><div class="field"><label>Preferred Days</label><input id="qDays" placeholder="Mon, Wed, Fri"></div><div class="field"><label>Preferred Time</label><input id="qTime" placeholder="5 PM - 7 PM"></div><div class="field full"><label>Description</label><textarea id="qDesc"></textarea></div></div><button onclick="createRequirement()">Post Tuition Requirement</button>`;
+else requirementForm.innerHTML="";
+let query=db.from("tuition_requirements").select("*").order("created_at",{ascending:false});
+if(currentProfile?.role==="student_parent")query=query.eq("posted_by",currentUser.id);
+else if(currentProfile?.role==="tutor")query=query.eq("status","open");
+else{requirementsList.innerHTML="";return}
+const r=await query.limit(50);requirementsList.innerHTML=(r.data||[]).map(x=>`<div class="item"><h4>${esc(x.class_level)} — ${esc((x.subjects||[]).join(", "))}</h4><div class="muted">${esc(x.city||"")} ${esc(x.area||"")} ${esc(x.pincode||"")} · ${esc(x.preferred_teaching_mode||"")} · Budget ${x.budget_min??"-"} - ${x.budget_max??"-"}</div><p>${esc(x.description||"")}</p>${currentProfile.role==="tutor"?`<button onclick="applyToRequirement('${x.id}')">Apply</button>`:""}</div>`).join("")||"<p class='muted'>No tuition requirements found.</p>";
+}
+async function createRequirement(){
+const payload={posted_by:currentUser.id,student_name:qStudent.value||null,class_level:qClass.value.trim(),subjects:arr(qSubjects.value),description:qDesc.value||null,preferred_teaching_mode:qMode.value,city:qCity.value||null,area:qArea.value||null,pincode:qPin.value||null,budget_min:qMin.value?Number(qMin.value):null,budget_max:qMax.value?Number(qMax.value):null,preferred_days:arr(qDays.value),preferred_time:qTime.value||null};
+if(!payload.class_level||!payload.subjects.length){msg("dashMsg","Class level and subjects are required.","err");return}
+const r=await db.from("tuition_requirements").insert(payload);msg("dashMsg",r.error?r.error.message:"Tuition requirement posted successfully.","ok");await loadRequirements();
+}
+async function applyToRequirement(id){
+const fee=prompt("Proposed fee (optional):","");const messageText=prompt("Message to Student/Parent:","");
+const r=await db.from("tutor_applications").insert({requirement_id:id,tutor_id:currentUser.id,message:messageText||null,proposed_fee:fee?Number(fee):null});
+alert(r.error?r.error.message:"Application submitted successfully.");await loadRequirements();
+}
+async function loadApplications(){
+if(currentProfile?.role==="admin"){applicationsList.innerHTML="";return}
+let q;
+if(currentProfile?.role==="tutor")q=db.from("tutor_applications").select("*").eq("tutor_id",currentUser.id).order("applied_at",{ascending:false});
+else q=db.from("tutor_applications").select("*").order("applied_at",{ascending:false});
+const r=await q.limit(50);applicationsList.innerHTML=(r.data||[]).map(x=>`<div class="item"><h4>Application</h4><div class="muted">Requirement: ${esc(x.requirement_id)} · Status: <span class="badge">${esc(x.status)}</span></div><p>${esc(x.message||"")}</p><b>Proposed fee:</b> ${x.proposed_fee??"-"}</div>`).join("")||"<p class='muted'>No applications found.</p>";
+}
+async function loadNotifications(){const r=await db.from("notifications").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false}).limit(30);notificationsList.innerHTML=(r.data||[]).map(x=>`<div class="item"><h4>${esc(x.title)}</h4><p>${esc(x.message)}</p><span class="badge">${x.is_read?"Read":"New"}</span></div>`).join("")||"<p class='muted'>No notifications.</p>"}
+async function loadReviews(){if(currentProfile?.role==="admin"){reviewsList.innerHTML="";return}let q=db.from("reviews").select("*");if(currentProfile?.role==="tutor")q=q.eq("tutor_id",currentUser.id);else q=q.eq("student_parent_id",currentUser.id);const r=await q.order("created_at",{ascending:false});reviewsList.innerHTML=(r.data||[]).map(x=>`<div class="item"><h4>Rating: ${x.rating}/5</h4><p>${esc(x.review_text||"")}</p></div>`).join("")||"<p class='muted'>No reviews found.</p>"}
+async function loadDocuments(){
+if(currentProfile?.role!=="tutor"){documentsForm.innerHTML="";return}
+documentsForm.innerHTML=`<p class="muted">Upload files using paths beginning with your authenticated user ID. Private documents should remain in private storage buckets.</p><div class="grid"><div class="field"><label>Resume / CV</label><input id="fResume" type="file"></div><div class="field"><label>Identity Proof</label><input id="fId" type="file"></div><div class="field"><label>Passport Photo</label><input id="fPhoto" type="file"></div></div><button onclick="uploadDocuments()">Upload Documents</button>`;
+}
+async function uploadDocuments(){
+const files=[["resume",fResume.files[0],"tutor-resumes","resume_path"],["identity_proof",fId.files[0],"identity-proofs","identity_proof_path"],["passport_photo",fPhoto.files[0],"tutor-photos","passport_photo_path"]];
+for(const [type,file,bucket,column] of files){if(!file)continue;const path=currentUser.id+"/"+Date.now()+"_"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");const u=await db.storage.from(bucket).upload(path,file,{upsert:false});if(u.error){msg("dashMsg",type+" upload failed: "+u.error.message,"err");continue}await db.from("tutor_profiles").upsert({user_id:currentUser.id,[column]:path},{onConflict:"user_id"});await db.from("tutor_document_verifications").insert({tutor_id:currentUser.id,document_type:type,file_path:path});}
+msg("dashMsg","Document upload process completed. Check the messages above if any file failed.","ok");
+}
+async function loadAdmin(){
+const profiles=await db.from("profiles").select("*").limit(100);const tutors=await db.from("tutor_profiles").select("*").limit(100);const req=await db.from("tuition_requirements").select("*").limit(100);const apps=await db.from("tutor_applications").select("*").limit(100);const docs=await db.from("tutor_document_verifications").select("*").limit(100);
+adminContent.innerHTML=`<div class="cards"><div class="card"><h3>Profiles</h3><p>${profiles.data?.length||0} loaded</p></div><div class="card"><h3>Tutor Profiles</h3><p>${tutors.data?.length||0} loaded</p></div><div class="card"><h3>Requirements</h3><p>${req.data?.length||0} loaded</p></div></div><div class="tableWrap"><table class="table"><tr><th>User</th><th>Role</th><th>Email</th><th>Registration No.</th></tr>${(profiles.data||[]).map(p=>`<tr><td>${esc(p.full_name)}</td><td>${esc(roleText(p.role))}</td><td>${esc(p.email)}</td><td>${esc(p.registration_number||"")}</td></tr>`).join("")}</table></div><p class="muted">Admin policies from the supplied SQL control access to tutor profiles, requirements, applications, notifications and reviews. Document verification records are also shown where permitted by the active RLS policies.</p>`;
+}
+async function logout(){await db.auth.signOut();currentUser=null;currentProfile=null;home()}
+</script>
+</body>
+</html>
